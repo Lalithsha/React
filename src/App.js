@@ -15,64 +15,37 @@ export default function App() {
 function Counter() {
 
   // state of count for count and set step count
-  const [stepCount, setStepCount] = useState(1);
+  const [step, setStep] = useState(1)
+
   // state for count and
-  const [count, setCount] = useState(1);
+  const [count, setCount] = useState(0);
 
-  function handlePreviousStep() {
-    setStepCount((s) => s - 1)
-  }
+  const date = new Date('june 21 2027');
+  date.setDate(date.getDate() + count);
 
-  function handleNextStep() {
-    setStepCount((s) => s + 1)
-  }
-
-  function handlePreviousCount() {
-    setCount((coun) => coun - stepCount)
-  }
-
-  function handleNextCount() {
-    setCount((coun) => coun + stepCount)
-  }
-
-  function setDate() {
-
-    // Logic to get date days and month 
-    let date = new Date();
-    date.setDate(date.getDate() + count); // Add the number of 'count' days to the current day
-    let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-    let currentDay = days[date.getDay()];
-    let currentMonth = months[date.getMonth()];
-    let currentDate = date.getDate();
-    let currentYear = date.getFullYear();
-
-    let formatDate = currentDay + ', ' + currentMonth + ' ' + (currentDate) + ', ' + currentYear;
-
-    return formatDate;
-  }
-
-  setDate();
 
   return (
-    <>
-      <div className="step">
 
-        <button onClick={handlePreviousStep} > - </button>
-        <span >Step: {stepCount} </span>
-        <button onClick={handleNextStep} > + </button>
+    <div >
+      <div >
+        <button onClick={() => setStep((c) => c - 1)} >-</button>
+        <span>Step: {step}</span>
+        <button onClick={() => setStep((c) => c + 1)} >+</button>
       </div>
 
-      <div className="count">
-        <button onClick={handlePreviousCount} > - </button>
-        <span >Count: {count}</span>
-        <button onClick={handleNextCount}> + </button>
+      <div >
+        <button onClick={() => setCount((c) => c - step)} >-</button>
+        <span>Count: {count}</span>
+        <button onClick={() => setCount((c) => c + step)} >+</button>
       </div>
 
-      <span> {count} days from {setDate()}</span>
 
-    </>
+      <p>
+        <span>{count === 0 ? "Today is " : count > 0 ? `${count} days from today is` : `${Math.abs(count)} days ago was `}</span>
+        <span> {date.toDateString()} </span>
+      </p>
+
+    </div>
 
   )
 }
